@@ -1,37 +1,33 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 import css from './filter.module.css';
 
-class Filter extends Component {
-  static propTypes = {
-    filter: PropTypes.string.isRequired,
-    onFilterChange: PropTypes.func.isRequired,
+const Filter = ({ filter, onFilterChange }) => {
+
+  const handleFilterChange = event => {
+    const { value } = event.target; onFilterChange(value);
   };
 
-  handleFilterChange = event => {
-    const { value } = event.target;
-    const { onFilterChange } = this.props;
-    onFilterChange(value);
-  };
-
-  render() {
-    const { filter } = this.props;
-    return (
-      <div>
-        <label className={css.filterLabel} htmlFor="filterInput">
-          Find contacts by name
-        </label>
-        <input
-          className={css.filterInput}
-          id="filterInput"
-          type="text"
-          name="filter"
-          value={filter}
-          onChange={this.handleFilterChange}
-        />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <label className={css.filterLabel} htmlFor="filterInput">
+        Find contacts by name
+      </label>
+      <input
+        className={css.filterInput}
+        id="filterInput"
+        type="text"
+        name="filter"
+        value={filter}
+        onChange={handleFilterChange}
+      />
+    </div>
+  )
 }
+
+Filter.propTypes = {
+  filter: PropTypes.string.isRequired,
+  onFilterChange: PropTypes.func.isRequired,
+};
 
 export default Filter;
