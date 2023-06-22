@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import css from './contactForm.module.css';
 
-const ContactForm = ({ onAddContact, isContactExists }) => {
+const ContactForm = ({ onAddContact }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -16,13 +16,11 @@ const ContactForm = ({ onAddContact, isContactExists }) => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    if (isContactExists(name)) {
-      alert(`${name} is already in contacts`);
-      return;
-    }
+
     const newContact = { name, number };
-    onAddContact(newContact);
-    reset();
+    const isSuccess = onAddContact(newContact);
+    
+    if (isSuccess) reset();
   };
 
   const reset = () => {
@@ -69,7 +67,6 @@ const ContactForm = ({ onAddContact, isContactExists }) => {
 
 ContactForm.propTypes = {
   onAddContact: PropTypes.func.isRequired,
-  isContactExists: PropTypes.func.isRequired,
 };
 
 export default ContactForm;
